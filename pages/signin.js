@@ -163,7 +163,7 @@ function SignIn() {
 									}}
 								>
 									Sign In With Github &nbsp;
-									<GitHubIcon sx={{ paddingBottom: "0.2rem" }} />
+									<GitHubIcon sx={{ paddingBottom: "0.19rem" }} />
 								</Box>
 								<Box
 									className={styles.ripple}
