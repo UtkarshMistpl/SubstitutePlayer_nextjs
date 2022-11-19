@@ -158,7 +158,7 @@ function SignIn() {
 									}}
 									onClick={() => {
 										logingIn("GitHubProvider", {
-											callbackUrl: `${process.env.CALLBACK_URL}/HomeMain`,
+											callbackUrl: `https://substitute-player-nextjs.vercel.app/HomeMain`,
 										});
 									}}
 								>
