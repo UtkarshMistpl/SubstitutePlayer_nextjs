@@ -158,7 +158,7 @@ function SignIn() {
 									}}
 									onClick={() => {
 										logingIn("GitHubProvider", {
-											callbackUrl: `${process.env.NEXTAUTH_URL}/HomeMain`,
+											callbackUrl: `${process.env.CALLBACK_URL}/HomeMain`,
 										});
 									}}
 								>
