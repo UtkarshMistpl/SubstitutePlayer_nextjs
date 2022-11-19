@@ -29,6 +29,7 @@
     "react-github-btn": "^1.4.0",
     "react-social-icons": "^5.15.0",
     "socket.io-client": "^4.5.3",
+    "vercel": "^28.5.5",
     "yup": "^0.32.11"
   },
   "devDependencies": {
