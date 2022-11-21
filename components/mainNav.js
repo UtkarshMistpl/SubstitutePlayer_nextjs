@@ -47,11 +47,10 @@ const MainNav = (props) => {
 	};
 
 	const logoutNext = async () => {
-		const data = signOut({
+		const data = await signOut({
 			redirect: false,
-			callbackUrl: `${process.env.NEXT_PUBLIC_VERCEL_URL}/signin`,
 		});
-		router.push(`${process.env.NEXT_PUBLIC_VERCEL_URL}/signin`);
+		router.push("/signin");
 	};
 
 	return (

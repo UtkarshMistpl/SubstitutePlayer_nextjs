@@ -180,7 +180,7 @@ function SignIn() {
 									}}
 									onClick={() => {
 										logingIn("GoogleProvider", {
-											callbackUrl: `${process.env.NEXT_PUBLIC_VERCEL_URL}/HomeMain`,
+											callbackUrl: `https://substitute-player-nextjs.vercel.app/HomeMain`,
 										});
 									}}
 								>
