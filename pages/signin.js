@@ -50,7 +50,7 @@ function SignIn() {
 
 	// const [isConnected, setIsConnected] = React.useState(socket.connected);
 	React.useEffect(() => {
-		if (status !== "unauthenticated") router.push("/HomeMain");
+		if (!session) router.push("/HomeMain");
 	});
 	const handleSubmit = async (values) => {
 		console.log(values);
@@ -180,7 +180,7 @@ function SignIn() {
 									}}
 									onClick={() => {
 										logingIn("GoogleProvider", {
-											callbackUrl: `https://substitute-player-nextjs.vercel.app/HomeMain`,
+											callbackUrl: `${NEXT_PUBLIC_VERCEL_URL}/HomeMain`,
 										});
 									}}
 								>
