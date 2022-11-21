@@ -18,8 +18,8 @@ const HomeMain = () => {
 	return (
 		<>
 			<LayOut value={0}>
-				<div className="mt-5 pt-5 text-center">
-					<h4>Build your team to play with</h4>
+				<div className="mt-5 pt-5">
+					<h4 className="text-center">Build your team to play with</h4>
 					<FilterForm />
 				</div>
 				<div className="container">

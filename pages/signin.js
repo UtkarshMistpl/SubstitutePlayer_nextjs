@@ -54,7 +54,11 @@ function SignIn() {
 	});
 	const handleSubmit = async (values) => {
 		console.log(values);
-		await login(values.email, values.password);
+		await logingIn("Credentials", {
+			redirect: false,
+			email: email,
+			password: password,
+		});
 		if (!error) {
 			setLoginState(true);
 		} else {

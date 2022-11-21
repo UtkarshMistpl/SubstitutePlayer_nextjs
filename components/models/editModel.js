@@ -47,7 +47,7 @@ export default function TransitionsModal({ open, setOpen, name }) {
 									<label for="exampleInputEmail1">Email</label>
 									<input
 										type="email"
-										class="form-control"
+										className="form-control"
 										id="exampleInputEmail1"
 										aria-describedby="emailHelp"
 										placeholder="Enter email"
@@ -56,31 +56,31 @@ export default function TransitionsModal({ open, setOpen, name }) {
 								<div className="col-6">
 									<label for="exampleInputEmail1">Name</label>
 									<input
-										type="email"
-										class="form-control"
+										type="text"
+										className="form-control"
 										id="exampleInputEmail1"
 										aria-describedby="emailHelp"
-										placeholder="Enter email"
+										placeholder="Enter Name"
 									/>
 								</div>
 								<div className="col-6">
 									<label for="exampleInputEmail1">last name</label>
 									<input
-										type="email"
-										class="form-control"
+										type="text"
+										className="form-control"
 										id="exampleInputEmail1"
 										aria-describedby="emailHelp"
-										placeholder="Enter email"
+										placeholder="last name"
 									/>
 								</div>
 								<div className="col-6">
 									<label for="exampleInputEmail1">Phone</label>
 									<input
-										type="email"
-										class="form-control"
+										type="text"
+										className="form-control"
 										id="exampleInputEmail1"
 										aria-describedby="emailHelp"
-										placeholder="Enter email"
+										placeholder="Number"
 									/>
 								</div>
 								<div className="col-12 p-3">
