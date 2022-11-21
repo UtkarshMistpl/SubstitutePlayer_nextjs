@@ -49,9 +49,9 @@ const MainNav = (props) => {
 	const logoutNext = async () => {
 		const data = signOut({
 			redirect: false,
-			callbackUrl: `${NEXT_PUBLIC_VERCEL_URL}/signin`,
+			callbackUrl: `${process.env.NEXT_PUBLIC_VERCEL_URL}/signin`,
 		});
-		useRouter().push(data.url);
+		router.push(`${process.env.NEXT_PUBLIC_VERCEL_URL}/signin`);
 	};
 
 	return (
