@@ -15,7 +15,7 @@ const style = {
 	bgcolor: "background.paper",
 	border: "2px solid #000",
 	boxShadow: 24,
-	padding: "0.5rem , 0.7rem",
+	p: "0.7rem",
 };
 
 export default function TransitionsModal({ open, setOpen, name }) {
@@ -41,7 +41,7 @@ export default function TransitionsModal({ open, setOpen, name }) {
 						<Typography id="transition-modal-title" variant="h6" component="h2">
 							{name}
 						</Typography>
-						<div className="container-fluid">
+						<div className="container-fluid mt-2">
 							<div className="row">
 								<div className="col-6">
 									<label for="exampleInputEmail1">Email</label>

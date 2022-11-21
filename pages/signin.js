@@ -102,6 +102,12 @@ function SignIn() {
 	// 	};
 	// }, []);
 
+	const NextLogin = async (provider) => {
+		const data = await logingIn(provider, {
+			redirect: false,
+		});
+	};
+
 	return (
 		<>
 			<div className="container-fluids" style={{ height: "100vh" }}>
@@ -158,8 +164,9 @@ function SignIn() {
 									}}
 									onClick={() => {
 										logingIn("GitHubProvider", {
-											callbackUrl: `https://substitute-player-nextjs.vercel.app/HomeMain`,
+											redirect: false,
 										});
+										console.log(session);
 									}}
 								>
 									Sign In With Github &nbsp;
@@ -179,9 +186,7 @@ function SignIn() {
 										color: "grey",
 									}}
 									onClick={() => {
-										logingIn("GoogleProvider", {
-											callbackUrl: `https://substitute-player-nextjs.vercel.app/HomeMain`,
-										});
+										NextLogin("GoogleProvider");
 									}}
 								>
 									Sign In With Google &nbsp;
