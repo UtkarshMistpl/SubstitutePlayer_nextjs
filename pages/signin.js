@@ -50,7 +50,7 @@ function SignIn() {
 
 	// const [isConnected, setIsConnected] = React.useState(socket.connected);
 	React.useEffect(() => {
-		if (!session) router.push("/HomeMain");
+		if (session) router.push("/HomeMain");
 	});
 	const handleSubmit = async (values) => {
 		console.log(values);

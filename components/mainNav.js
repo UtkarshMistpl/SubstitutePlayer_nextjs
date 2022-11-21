@@ -46,6 +46,14 @@ const MainNav = (props) => {
 		}
 	};
 
+	const logoutNext = async () => {
+		const data = signOut({
+			redirect: false,
+			callbackUrl: `${NEXTAUTH_URL}/signin`,
+		});
+		useRouter().push(data.url);
+	};
+
 	return (
 		<>
 			<Box sx={{ boxShadow: 3 }}>
@@ -79,9 +87,7 @@ const MainNav = (props) => {
 								marginRight: "0.5rem",
 								cursor: "pointer",
 							}}
-							onClick={() => {
-								signOut();
-							}}
+							onClick={logoutNext}
 						>
 							Logout <LogoutRoundedIcon />
 						</Typography>
