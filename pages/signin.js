@@ -179,7 +179,9 @@ function SignIn() {
 										color: "grey",
 									}}
 									onClick={() => {
-										// logingIn();
+										logingIn("GoogleProvider", {
+											callbackUrl: `https://substitute-player-nextjs.vercel.app/HomeMain`,
+										});
 									}}
 								>
 									Sign In With Google &nbsp;
