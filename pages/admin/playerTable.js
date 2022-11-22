@@ -19,7 +19,7 @@ const rows = [
 	{ id: 9, lastName: "Specter", firstName: "Donna", gender: "F" },
 ];
 
-const PlayerTable = ({ message }) => {
+const PlayerTable = () => {
 	const [open, setOpen] = React.useState(false);
 	const [name, setName] = React.useState("");
 	const { Protect } = useProtectPage();
@@ -94,10 +94,8 @@ const PlayerTable = ({ message }) => {
 				<div className="mt-5 pt-5">
 					<div className="container">
 						<div className="row justify-content-center">
-							<div className="col-12">
-								<h6>{message}</h6>
-							</div>
-							<div className="col-11 col-md-8">
+							<div className="col-12">{/* <h6>{message}</h6> */}</div>
+							<div className="col-12 col-lg-8">
 								<DataTable rows={rows} columns={columns} setOpen={setOpen} />
 							</div>
 						</div>
@@ -110,9 +108,3 @@ const PlayerTable = ({ message }) => {
 };
 
 export default PlayerTable;
-
-export function getServerSideProps() {
-	return {
-		props: { message: "This text came from server side" },
-	};
-}

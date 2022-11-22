@@ -10,7 +10,8 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import MainNav from "../components/mainNav";
 import LayOut from "../components/Layout/layOut";
 import { useProtectPage } from "../hooks/useProtectPage";
-
+import { useSnackbar, SnackbarContent } from "notistack";
+import Multiselect from "multiselect-react-dropdown";
 const phoneRegExp =
 	/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 const backgroundImage = {
@@ -24,16 +25,15 @@ const validationSchema = Yup.object().shape({
 	email: Yup.string()
 		.email("Invalid email address format")
 		.required("Email is required"),
-	sports: Yup.string().required(),
-	days: Yup.string().required(),
 });
 
 const initialValues = {
 	email: "",
 	name: "",
+	address: "",
 	mobile: "",
-	days: "",
-	sports: "",
+	time_from: "",
+	time_to: "",
 };
 
 const DAYS = [
@@ -57,13 +57,37 @@ const SPORTS = [
 const SportCenter = () => {
 	const { signup } = useSignup();
 	const { Protect } = useProtectPage();
+	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
+	const inistialSelectedValues = {
+		days: DAYS,
+		sports: SPORTS,
+	};
+	const [selectedValues, setSelectedValues] = React.useState(
+		inistialSelectedValues
+	);
 	React.useEffect(() => {
 		Protect();
 	}, []);
 
 	const handleSubmit = async (values) => {
-		await signup(values);
+		try {
+			const registerFromValues = {
+				...values,
+				...selectedValues,
+			};
+			let result = await signup(values);
+		} catch {
+			enqueueSnackbar("Failed to submit data", {
+				variant: "success",
+			});
+		}
+
+		if (result) {
+			enqueueSnackbar("This is a success message!", {
+				variant: "success",
+			});
+		}
 	};
 	return (
 		<>
@@ -75,13 +99,13 @@ const SportCenter = () => {
 							style={backgroundImage}
 						>
 							<div className="col-12"></div>
-							<div className="col-12 col-md-8 col-sm-8 col-lg-7 px-5 py-5">
+							<div className="col-12 col-md-8 col-sm-8 col-lg-6 px-5 py-5">
 								<Formik
 									initialValues={initialValues}
 									onSubmit={handleSubmit}
 									validationSchema={validationSchema}
 								>
-									<MyForm className="border p-3 rounded bg-white shadow-lg">
+									<MyForm className="border px-4 py-3 rounded bg-white shadow-lg">
 										<Form.Group className="mb-3" controlId="formBasicName">
 											<Form.Label>Club Name</Form.Label>
 											<Field
@@ -125,45 +149,35 @@ const SportCenter = () => {
 												We'll never share your email with anyone else.
 											</Form.Text>
 										</Form.Group>
-										<Form.Group className="mb-3" controlId="formBasicRole">
-											<Form.Label>Open Day's</Form.Label>
-											<Field
-												as="select"
-												className="form-control"
-												aria-label="Default select example"
-												id="days"
-												name="sports"
-												defaultValue={"default"}
-											>
-												<option value={"default"}>Open this select menu</option>
-												{DAYS.map((row, index) => {
-													return (
-														<option key={index} value={row.value}>
-															{row.label}
-														</option>
-													);
-												})}
-											</Field>
+										<Form.Group className="mb-3" controlId="formBasicDay">
+											<Form.Label>Open Days</Form.Label>
+											<Multiselect
+												options={DAYS} // Options to display in the dropdown
+												selectedValues={selectedValues.days} // Preselected value to persist in dropdown
+												onSelect={(e) => {
+													selectedValues.days = e;
+													console.log("event or values", selectedValues);
+												}} // Function will trigger on select event
+												onRemove={(e) => {
+													selectedValues.days = e;
+												}} // Function will trigger on remove event
+												displayValue="label" // Property name to display in the dropdown options
+											/>
 										</Form.Group>
-										<Form.Group className="mb-3" controlId="formBasicRole">
+										<Form.Group className="mb-3" controlId="formBasicDay">
 											<Form.Label>Sports</Form.Label>
-											<Field
-												as="select"
-												className="form-control"
-												aria-label="Default select example"
-												id="sports"
-												name="sports"
-												defaultValue={"default"}
-											>
-												<option value={"default"}>Open this select menu</option>
-												{SPORTS.map((row, index) => {
-													return (
-														<option key={index} value={row.value}>
-															{row.label}
-														</option>
-													);
-												})}
-											</Field>
+											<Multiselect
+												options={SPORTS} // Options to display in the dropdown
+												selectedValues={selectedValues.sports} // Preselected value to persist in dropdown
+												onSelect={(e) => {
+													selectedValues.sports = e;
+													console.log("event or values", selectedValues);
+												}} // Function will trigger on select event
+												onRemove={(e) => {
+													selectedValues.sports = e;
+												}} // Function will trigger on remove event
+												displayValue="label" // Property name to display in the dropdown options
+											/>
 										</Form.Group>
 										<Form.Group className="mb-3" controlId="formBasicTime">
 											<Form.Label>Open From </Form.Label>

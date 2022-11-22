@@ -4,13 +4,14 @@ import BgSignup from "../public/assets/background/BgSignUp.png";
 import { useFormik } from "formik";
 import { Formik, Form as MyForm, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { useSignup } from "../hooks/useSignup";
+import { useRegister } from "../hooks/useRegisterPlayer";
 import React from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 import MainNav from "../components/mainNav";
 import LayOut from "../components/Layout/layOut";
 import { useProtectPage } from "../hooks/useProtectPage";
 import { useSnackbar, SnackbarContent } from "notistack";
+import Multiselect from "multiselect-react-dropdown";
 const phoneRegExp =
 	/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 const backgroundImage = {
@@ -25,8 +26,6 @@ const validationSchema = Yup.object().shape({
 	email: Yup.string()
 		.email("Invalid email address format")
 		.required("Email is required"),
-	sports: Yup.string().required(),
-	days: Yup.string().required(),
 });
 
 const initialValues = {
@@ -34,8 +33,7 @@ const initialValues = {
 	name: "",
 	address: "",
 	mobile: "",
-	days: "",
-	sports: "",
+	skill: "",
 	time_from: "",
 	time_to: "",
 };
@@ -59,20 +57,35 @@ const SPORTS = [
 ];
 
 const PlayerForm = () => {
-	const { signup } = useSignup();
+	const { register } = useRegister();
 	const { Protect } = useProtectPage();
 	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
+	const inistialSelectedValues = {
+		days: DAYS,
+		sports: SPORTS,
+		skills: [],
+	};
+	const [selectedValues, setSelectedValues] = React.useState(
+		inistialSelectedValues
+	);
+
 	React.useEffect(() => {
 		Protect();
 	});
 
 	const handleSubmit = async (values) => {
 		try {
-			let result = await signup(values);
+			const registerFromValues = {
+				...values,
+				...selectedValues,
+			};
+			let result = await register(registerFromValues, "registerPlayer");
 		} catch {
 			enqueueSnackbar("Failed to submit data", {
-				variant: "success",
+				variant: "Error",
 			});
+			console.log("this is result", result);
 		}
 
 		if (result) {
@@ -91,13 +104,13 @@ const PlayerForm = () => {
 							style={backgroundImage}
 						>
 							<div className="col-12"></div>
-							<div className="col-12 col-md-8 col-sm-8 col-lg-7 px-5 py-5">
+							<div className="col-12 col-md-8  col-lg-6 px-5 py-5">
 								<Formik
 									initialValues={initialValues}
 									onSubmit={handleSubmit}
 									validationSchema={validationSchema}
 								>
-									<MyForm className="border p-3 rounded bg-white shadow-lg">
+									<MyForm className="border px-4 py-3 rounded bg-white shadow-lg">
 										<Form.Group className="mb-3" controlId="formBasicName">
 											<Form.Label>Name</Form.Label>
 											<Field
@@ -141,45 +154,44 @@ const PlayerForm = () => {
 												We'll never share your email with anyone else.
 											</Form.Text>
 										</Form.Group>
-										<Form.Group className="mb-3" controlId="formBasisDay">
-											<Form.Label>Day</Form.Label>
-											<Field
-												as="select"
-												className="form-control"
-												id="days"
-												name="days"
-												defaultValue={"default"}
-											>
-												<option value={"default"}>Open this select menu</option>
-												{DAYS.map((row, index) => {
-													return (
-														<option key={index} value={row.value}>
-															{row.label}
-														</option>
-													);
-												})}
-											</Field>
+										<Form.Group className="mb-3" controlId="formBasicDay">
+											<Form.Label>Days</Form.Label>
+											<Multiselect
+												options={DAYS} // Options to display in the dropdown
+												selectedValues={selectedValues.days} // Preselected value to persist in dropdown
+												onSelect={(e) => {
+													selectedValues.days = e;
+													console.log("event or values", selectedValues);
+												}} // Function will trigger on select event
+												onRemove={(e) => {
+													selectedValues.days = e;
+												}} // Function will trigger on remove event
+												displayValue="label" // Property name to display in the dropdown options
+											/>
 										</Form.Group>
-										<Form.Group className="mb-3" controlId="formBasicSport">
-											<Form.Label>Sport</Form.Label>
+										<Form.Group className="mb-3" controlId="formBasicDay">
+											<Form.Label>Sports</Form.Label>
+											<Multiselect
+												options={SPORTS} // Options to display in the dropdown
+												selectedValues={selectedValues.sports} // Preselected value to persist in dropdown
+												onSelect={(e) => {
+													selectedValues.sports = e;
+													console.log("event or values", selectedValues);
+												}} // Function will trigger on select event
+												onRemove={(e) => {
+													selectedValues.sports = e;
+												}} // Function will trigger on remove event
+												displayValue="label" // Property name to display in the dropdown options
+											/>
+										</Form.Group>
+										<Form.Group className="mb-3" controlId="formBasicSkill">
+											<Form.Label>Skill </Form.Label>
 											<Field
-												as="select"
 												className="form-control"
-												id="sports"
-												name="sports"
-												defaultValue={"default_sport"}
-											>
-												<option value={"default_sport"}>
-													Open this select menu
-												</option>
-												{SPORTS.map((row, index) => {
-													return (
-														<option key={index} value={row.value}>
-															{row.label}
-														</option>
-													);
-												})}
-											</Field>
+												name="skill"
+												id="skill"
+												type="text"
+											/>
 										</Form.Group>
 										<Form.Group className="mb-3" controlId="formBasicTime">
 											<Form.Label>From </Form.Label>

@@ -63,14 +63,14 @@ const FilterForm = () => {
 				<Form>
 					<div className="container p-3">
 						<div className="row justify-content-center">
-							<div className="col-11 col-md-6 col-lg-3 form-group p-2">
+							<div className="col-11  form-group p-2">
 								<label>Sport</label>
 								<select
 									className="form-select"
 									aria-label="Default select example"
 									defaultValue={0}
 								>
-									<option value={0}>Open this select menu</option>
+									<option value={0}>Select a sport</option>
 									{SPORTS.map((row, index) => {
 										return (
 											<option key={index} value={row.value}>
@@ -82,14 +82,14 @@ const FilterForm = () => {
 
 								{/* {error ? <ErrorMessage /> : null} */}
 							</div>
-							<div className="col-11 col-md-6 col-lg-3 form-group p-2">
+							<div className="col-11 form-group p-2">
 								<label>Day</label>
 								<select
 									className="form-select"
 									aria-label="Default select example"
 									defaultValue={"default"}
 								>
-									<option value={"default"}>Open this select menu</option>
+									<option value={"default"}>Select a day</option>
 									{DAYS.map((row, index) => {
 										return (
 											<option key={index} value={row.value}>
@@ -101,25 +101,22 @@ const FilterForm = () => {
 
 								{/* <ErrorMessage /> */}
 							</div>
-							<div
-								className="col-11 col-md-6 col-lg-3 p-2"
-								style={{ paddingRight: "3rem" }}
-							>
+							<div className="col-11 p-2" style={{ paddingRight: "3rem" }}>
 								<label>From</label>
 								<input className="form-control" type="time" />
 								{/* <ErrorMessage /> */}
 							</div>
-							<div className="col-11 col-md-6 col-lg-3 form-group p-2">
+							<div className="col-11 form-group p-2">
 								<label>To</label>
 								<input className="form-control" type="time" />
 								{/* <ErrorMessage /> */}
 							</div>
-							<div className="col-11 col-md-6 col-lg-3 form-group p-2">
+							<div className="col-11 form-group p-2">
 								<label>Place</label>
 								<input className="form-control" type="text" />
 								{/* <ErrorMessage /> */}
 							</div>
-							<div className="col-11 col-md-6 col-lg-3">
+							<div className="col-11">
 								<Button
 									type="submit"
 									color="primary"
