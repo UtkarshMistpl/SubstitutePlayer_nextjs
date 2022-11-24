@@ -95,7 +95,7 @@ const PlayerTable = () => {
 					<div className="container">
 						<div className="row justify-content-center">
 							<div className="col-12">{/* <h6>{message}</h6> */}</div>
-							<div className="col-12 col-lg-8">
+							<div className="col-12 col-lg-10">
 								<DataTable rows={rows} columns={columns} setOpen={setOpen} />
 							</div>
 						</div>

@@ -4,7 +4,7 @@ import BgSignup from "../public/assets/background/BgSignUp.png";
 import { useFormik } from "formik";
 import { Formik, Form as MyForm, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { useRegister } from "../hooks/useRegisterPlayer";
+import { useRegister, isLoading, error } from "../hooks/useRegisterPlayer";
 import React from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 import MainNav from "../components/mainNav";
@@ -21,7 +21,7 @@ const backgroundImage = {
 };
 const validationSchema = Yup.object().shape({
 	name: Yup.string().required(),
-	phone: Yup.string().matches(phoneRegExp, "Phone number is not valid"),
+	contact: Yup.string().matches(phoneRegExp, "Phone number is not valid"),
 	address: Yup.string().required(),
 	email: Yup.string()
 		.email("Invalid email address format")
@@ -32,10 +32,10 @@ const initialValues = {
 	email: "",
 	name: "",
 	address: "",
-	mobile: "",
+	contact: "",
 	skill: "",
-	time_from: "",
-	time_to: "",
+	_from: "",
+	_to: "",
 };
 
 const DAYS = [
@@ -88,8 +88,8 @@ const PlayerForm = () => {
 			console.log("this is result", result);
 		}
 
-		if (result) {
-			enqueueSnackbar("This is a success message!", {
+		if (!error) {
+			enqueueSnackbar("Data submited successfully!", {
 				variant: "success",
 			});
 		}
@@ -125,8 +125,8 @@ const PlayerForm = () => {
 											<Form.Label>Mobile Number</Form.Label>
 											<Field
 												className="form-control"
-												name="mobile"
-												id="mobile"
+												name="contact"
+												id="contact"
 												type="text"
 												placeholder="Number"
 											/>
@@ -197,8 +197,8 @@ const PlayerForm = () => {
 											<Form.Label>From </Form.Label>
 											<Field
 												className="form-control"
-												name="timefrom"
-												id="time_from"
+												name="_from"
+												id="_from"
 												type="time"
 											/>
 										</Form.Group>
@@ -206,8 +206,8 @@ const PlayerForm = () => {
 											<Form.Label>To </Form.Label>
 											<Field
 												className="form-control"
-												name="timeTo"
-												id="time_to"
+												name="_to"
+												id="_to"
 												type="time"
 											/>
 										</Form.Group>

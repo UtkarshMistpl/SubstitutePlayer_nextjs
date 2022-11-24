@@ -4,6 +4,7 @@ import FilterForm from "../components/filterForm";
 import LayOut from "../components/Layout/layOut";
 import { useProtectPage } from "../hooks/useProtectPage";
 import MyMapComponent from "../components/maps";
+import SimpleMap from "../components/googleMaps/mapreact";
 // import Demo from "../components/location/currentLocation";
 
 // import tempMap from "../public/assets/background/temMapImage.jpg";
@@ -29,10 +30,11 @@ const HomeMain = () => {
 						</div>
 						<div className="col-12 col-md-6 p-3">
 							{/* <img className="img-fluid" src={tempMap} /> */}
-							<MyMapComponent />
+							{/* <MyMapComponent /> */}
+							<SimpleMap />
 						</div>
 						<div className="col-12">
-							<div className="p-3">{/* <Demo /> */}</div>
+							<div className="p-3"></div>
 						</div>
 					</div>
 				</div>

@@ -19,7 +19,9 @@ export const useRegister = () => {
 				body: JSON.stringify(values),
 			}
 		);
+		// console.log(response);
 		const json = await response.json();
+		// console.log(json);
 
 		if (!response.ok) {
 			setIsLoading(false);
