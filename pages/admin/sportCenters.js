@@ -120,7 +120,7 @@ const SportCenterTable = ({ data }) => {
 export default SportCenterTable;
 
 export async function getServerSideProps(context) {
-	const res = await fetch(`http://localhost:3000/api/register/registerClub`, {
+	const res = await fetch(`/api/register/registerClub`, {
 		method: "GET",
 		headers: { "Content-Type": "application/json" },
 	});
