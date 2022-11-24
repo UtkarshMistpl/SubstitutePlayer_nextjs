@@ -12,6 +12,8 @@ import LayOut from "../components/Layout/layOut";
 import { useProtectPage } from "../hooks/useProtectPage";
 import { useSnackbar, SnackbarContent } from "notistack";
 import Multiselect from "multiselect-react-dropdown";
+import { useRegister, isLoading, error } from "../hooks/useRegisterPlayer";
+
 const phoneRegExp =
 	/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 const backgroundImage = {
@@ -20,20 +22,21 @@ const backgroundImage = {
 	backgroundRepeat: "no-repeat",
 };
 const validationSchema = Yup.object().shape({
-	name: Yup.string().required(),
+	name: Yup.string().required("Name is required"),
 	phone: Yup.string().matches(phoneRegExp, "Phone number is not valid"),
 	email: Yup.string()
 		.email("Invalid email address format")
 		.required("Email is required"),
+	address: Yup.string().required("Address is required"),
 });
 
 const initialValues = {
 	email: "",
 	name: "",
 	address: "",
-	mobile: "",
-	time_from: "",
-	time_to: "",
+	contact: "",
+	_from: "",
+	_to: "",
 };
 
 const DAYS = [
@@ -55,9 +58,10 @@ const SPORTS = [
 ];
 
 const SportCenter = () => {
-	const { signup } = useSignup();
+	// const { signup } = useSignup();
 	const { Protect } = useProtectPage();
 	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+	const { register, error, isLoading } = useRegister();
 
 	const inistialSelectedValues = {
 		days: DAYS,
@@ -76,14 +80,14 @@ const SportCenter = () => {
 				...values,
 				...selectedValues,
 			};
-			let result = await signup(values);
+			let result = await register(registerFromValues, "registerClub");
 		} catch {
 			enqueueSnackbar("Failed to submit data", {
-				variant: "success",
+				variant: "error",
 			});
 		}
 
-		if (result) {
+		if (!error) {
 			enqueueSnackbar("This is a success message!", {
 				variant: "success",
 			});
@@ -104,6 +108,8 @@ const SportCenter = () => {
 									initialValues={initialValues}
 									onSubmit={handleSubmit}
 									validationSchema={validationSchema}
+									validateOnChange={false}
+									validateOnBlur={false}
 								>
 									<MyForm className="border px-4 py-3 rounded bg-white shadow-lg">
 										<Form.Group className="mb-3" controlId="formBasicName">
@@ -115,17 +121,25 @@ const SportCenter = () => {
 												id="name"
 												name="name"
 											/>
+											<ErrorMessage name="name">
+												{(msg) => <div style={{ color: "red" }}>{msg}</div>}
+											</ErrorMessage>
 										</Form.Group>
+
 										<Form.Group className="mb-3" controlId="formBasicPhone">
 											<Form.Label>Contact Number</Form.Label>
 											<Field
 												className="form-control"
-												name="mobile"
-												id="mobile"
+												name="contact"
+												id="contact"
 												type="text"
 												placeholder="Number"
 											/>
+											<ErrorMessage name="contact">
+												{(msg) => <div style={{ color: "red" }}>{msg}</div>}
+											</ErrorMessage>
 										</Form.Group>
+
 										<Form.Group className="mb-3" controlId="formBasicAddress">
 											<Form.Label>Address</Form.Label>
 											<Field
@@ -135,7 +149,11 @@ const SportCenter = () => {
 												id="address"
 												name="address"
 											/>
+											<ErrorMessage name="address">
+												{(msg) => <div style={{ color: "red" }}>{msg}</div>}
+											</ErrorMessage>
 										</Form.Group>
+
 										<Form.Group className="mb-3" controlId="formBasicEmail">
 											<Form.Label>Email address</Form.Label>
 											<Field
@@ -148,7 +166,11 @@ const SportCenter = () => {
 											<Form.Text className="text-muted">
 												We'll never share your email with anyone else.
 											</Form.Text>
+											<ErrorMessage name="email">
+												{(msg) => <div style={{ color: "red" }}>{msg}</div>}
+											</ErrorMessage>
 										</Form.Group>
+
 										<Form.Group className="mb-3" controlId="formBasicDay">
 											<Form.Label>Open Days</Form.Label>
 											<Multiselect
@@ -183,8 +205,8 @@ const SportCenter = () => {
 											<Form.Label>Open From </Form.Label>
 											<Field
 												className="form-control"
-												name="timefrom"
-												id="time_from"
+												name="_from"
+												id="_from"
 												type="time"
 											/>
 										</Form.Group>
@@ -192,11 +214,12 @@ const SportCenter = () => {
 											<Form.Label>Closed at </Form.Label>
 											<Field
 												className="form-control"
-												name="timeTo"
-												id="time_to"
+												name="_to"
+												id="_to"
 												type="time"
 											/>
 										</Form.Group>
+
 										<Button variant="primary" type="submit">
 											Submit
 										</Button>

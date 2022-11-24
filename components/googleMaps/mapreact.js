@@ -15,11 +15,11 @@ export default function SimpleMap() {
 	return (
 		<div style={{ height: "100vh", width: "100%" }}>
 			<GoogleMapReact
-				bootstrapURLKeys={{ key: "" + process.env.GOOGLE_API_KEY }}
+				bootstrapURLKeys={{ key: `${process.env.GOOGLE_API_KEY}` }}
 				defaultCenter={defaultProps.center}
 				defaultZoom={defaultProps.zoom}
 			>
-				<MapMarker text="My Marker" />
+				<MapMarker text="map" />
 			</GoogleMapReact>
 		</div>
 	);

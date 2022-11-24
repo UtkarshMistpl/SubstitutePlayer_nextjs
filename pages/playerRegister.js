@@ -4,7 +4,7 @@ import BgSignup from "../public/assets/background/BgSignUp.png";
 import { useFormik } from "formik";
 import { Formik, Form as MyForm, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { useRegister, isLoading, error } from "../hooks/useRegisterPlayer";
+import { useRegister } from "../hooks/useRegisterPlayer";
 import React from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 import MainNav from "../components/mainNav";
@@ -20,9 +20,9 @@ const backgroundImage = {
 	backgroundRepeat: "no-repeat",
 };
 const validationSchema = Yup.object().shape({
-	name: Yup.string().required(),
+	name: Yup.string().required("Name is required"),
 	contact: Yup.string().matches(phoneRegExp, "Phone number is not valid"),
-	address: Yup.string().required(),
+	address: Yup.string().required("Address is required"),
 	email: Yup.string()
 		.email("Invalid email address format")
 		.required("Email is required"),
@@ -57,7 +57,7 @@ const SPORTS = [
 ];
 
 const PlayerForm = () => {
-	const { register } = useRegister();
+	const { register, error, isLoading } = useRegister();
 	const { Protect } = useProtectPage();
 	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
@@ -120,6 +120,9 @@ const PlayerForm = () => {
 												id="name"
 												name="name"
 											/>
+											<ErrorMessage name="name">
+												{(msg) => <div style={{ color: "red" }}>{msg}</div>}
+											</ErrorMessage>
 										</Form.Group>
 										<Form.Group className="mb-3" controlId="formBasicPhone">
 											<Form.Label>Mobile Number</Form.Label>
@@ -130,6 +133,9 @@ const PlayerForm = () => {
 												type="text"
 												placeholder="Number"
 											/>
+											<ErrorMessage name="contact">
+												{(msg) => <div style={{ color: "red" }}>{msg}</div>}
+											</ErrorMessage>
 										</Form.Group>
 										<Form.Group className="mb-3" controlId="formBasicAddress">
 											<Form.Label>Address</Form.Label>
@@ -140,6 +146,9 @@ const PlayerForm = () => {
 												id="address"
 												name="address"
 											/>
+											<ErrorMessage name="address">
+												{(msg) => <div style={{ color: "red" }}>{msg}</div>}
+											</ErrorMessage>
 										</Form.Group>
 										<Form.Group className="mb-3" controlId="formBasicEmail">
 											<Form.Label>Email address</Form.Label>
@@ -153,6 +162,9 @@ const PlayerForm = () => {
 											<Form.Text className="text-muted">
 												We'll never share your email with anyone else.
 											</Form.Text>
+											<ErrorMessage name="email">
+												{(msg) => <div style={{ color: "red" }}>{msg}</div>}
+											</ErrorMessage>
 										</Form.Group>
 										<Form.Group className="mb-3" controlId="formBasicDay">
 											<Form.Label>Days</Form.Label>

@@ -17,6 +17,8 @@ import { useLogout } from "../hooks/useLogout";
 import { useRouter } from "next/router";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
+
 // import { unstable_renderSubtreeIntoContainer } from "react-dom";
 
 // import { Tab } from "@chakra-ui/react";
@@ -28,6 +30,7 @@ const MainNav = (props) => {
 	const { logout } = useLogout();
 	const router = useRouter();
 	const { user } = useAuthContext();
+	const { data: session, status } = useSession();
 
 	const changeRoute = (value) => {
 		switch (value) {
@@ -74,9 +77,10 @@ const MainNav = (props) => {
 									router.push(Path);
 								}}
 							>
-								{Pages.map((page, index) => (
-									<Tab key={index} label={page} />
-								))}
+								{Pages.map((page, index) => {
+									if (index < 3 || session)
+										return <Tab key={index} label={page} />;
+								})}
 							</Tabs>
 						)}
 

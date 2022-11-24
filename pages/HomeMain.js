@@ -30,8 +30,8 @@ const HomeMain = () => {
 						</div>
 						<div className="col-12 col-md-6 p-3">
 							{/* <img className="img-fluid" src={tempMap} /> */}
-							{/* <MyMapComponent /> */}
-							<SimpleMap />
+							<MyMapComponent />
+							{/* <SimpleMap /> */}
 						</div>
 						<div className="col-12">
 							<div className="p-3"></div>
