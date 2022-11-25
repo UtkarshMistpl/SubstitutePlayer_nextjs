@@ -119,7 +119,7 @@ const SportCenterTable = ({ data }) => {
 
 export default SportCenterTable;
 
-export async function getStaticProps(context) {
+export async function getStaticProps() {
 	const res = await fetch(
 		`https://substitute-player-nextjs.vercel.app/api/register/registerClub`,
 		{
