@@ -121,10 +121,7 @@ export default SportCenterTable;
 
 export async function getServerSideProps() {
 	const res = await fetch(
-		`https://substitute-player-nextjs.vercel.app/api/register/registerClub`,
-		{
-			method: "GET",
-		}
+		"https://substitute-player-nextjs.vercel.app/api/hello"
 	);
 	const data = await res.json();
 
