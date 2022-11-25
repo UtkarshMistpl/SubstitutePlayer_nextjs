@@ -18,9 +18,12 @@ const HomeMain = () => {
 		Protect();
 	});
 	const runOnClick = async () => {
-		const response = await fetch(`http://localhost:3000/api/hello`, {
-			method: "GET",
-		});
+		const response = await fetch(
+			`https://substitute-player-nextjs.vercel.app/api/hello`,
+			{
+				method: "GET",
+			}
+		);
 
 		const json = await response.json();
 		console.log(json);
