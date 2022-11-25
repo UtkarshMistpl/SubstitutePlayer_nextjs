@@ -12,7 +12,7 @@ export const useRegister = () => {
 		console.log("values : ", values);
 
 		const response = await fetch(
-			`http://localhost:3000/api/register/${endPoint}`,
+			`https://substitute-player-nextjs.vercel.app/api/register/${endPoint}`,
 			{
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
