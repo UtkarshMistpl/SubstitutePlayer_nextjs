@@ -119,12 +119,11 @@ const SportCenterTable = ({ data }) => {
 
 export default SportCenterTable;
 
-export async function getServerSideProps(context) {
+export async function getStaticProps(context) {
 	const res = await fetch(
 		`https://substitute-player-nextjs.vercel.app/api/register/registerClub`,
 		{
 			method: "GET",
-			headers: { "Content-Type": "application/json" },
 		}
 	);
 	const data = await res.json();

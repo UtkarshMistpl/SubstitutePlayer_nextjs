@@ -19,6 +19,5 @@ export default async function handler(req, res) {
 			const posts = await clubController.getClubs();
 			if (posts) return res.json({ status: 200, data: posts });
 			else return res.json({ status: 200, data: "no data " });
-			break;
 	}
 }
