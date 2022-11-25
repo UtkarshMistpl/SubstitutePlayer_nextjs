@@ -5,7 +5,7 @@ const clubController = require("../controller/clubController");
 // import Player from "../../../models/playerModel";
 import Client from "../config/db";
 
-export default async function handler(req, res) {
+export default async function register(req, res) {
 	console.log("connecting");
 
 	await Client();

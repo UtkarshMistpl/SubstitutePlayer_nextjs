@@ -3,7 +3,7 @@ import Player from "../models/playerModel";
 const playerController = require("../controller/playerController");
 import Client from "../config/db";
 
-export default async function handler(req, res) {
+export default async function registerPlayer(req, res) {
 	console.log("connecting");
 
 	await Client();

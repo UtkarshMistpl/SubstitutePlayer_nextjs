@@ -5,6 +5,8 @@ import LayOut from "../components/Layout/layOut";
 import { useProtectPage } from "../hooks/useProtectPage";
 import MyMapComponent from "../components/maps";
 import SimpleMap from "../components/googleMaps/mapreact";
+import { Button } from "@mui/material";
+
 // import Demo from "../components/location/currentLocation";
 
 // import tempMap from "../public/assets/background/temMapImage.jpg";
@@ -15,6 +17,16 @@ const HomeMain = () => {
 	React.useEffect(() => {
 		Protect();
 	});
+	const runOnClick = async () => {
+		const response = await fetch(`http://localhost:3000/api/hello`, {
+			method: "GET",
+		});
+
+		const json = await response.json();
+		console.log(json);
+	};
+
+	// console.log(response);
 
 	return (
 		<>
@@ -34,7 +46,15 @@ const HomeMain = () => {
 							{/* <SimpleMap /> */}
 						</div>
 						<div className="col-12">
-							<div className="p-3"></div>
+							<div className="p-3">
+								<Button
+									variant="contained"
+									color="secondary"
+									onClick={runOnClick}
+								>
+									Run
+								</Button>
+							</div>
 						</div>
 					</div>
 				</div>
