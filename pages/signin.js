@@ -17,6 +17,7 @@ import { Box } from "@mui/material";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import styles from "../styles/Home.module.css";
 import GoogleIcon from "@mui/icons-material/Google";
+import Alert from "@mui/material/Alert";
 // import io from "socket.io-client";
 
 // const socket = io("http://localhost:3001", { transports: ["websocket"] });
@@ -42,32 +43,37 @@ const initialValues = {
 
 function SignIn() {
 	const router = useRouter();
-	const [loginState, setLoginState] = React.useState(false);
+	const [loginState, setLoginState] = React.useState(null);
 	const { user } = useAuthContext();
 	const { login, isLoading, error } = useLogin();
 	const { data: session, status } = useSession();
-	console.log(session);
+	console.log("current user session", status);
 
 	// const [isConnected, setIsConnected] = React.useState(socket.connected);
 	React.useEffect(() => {
-		if (session) router.push("/HomeMain");
-	});
+		if (status === "authenticated") router.push("/HomeMain");
+	}, [session]);
 	const handleSubmit = async (values) => {
 		console.log(values);
 		await logingIn("CredentialsProvider", {
 			email: values.email,
 			password: values.password,
-		});
-		if (!error) {
-			setLoginState(true);
-		} else {
-			setLoginState("not found");
-		}
-		console.log("login state: " + loginState);
+			redirect: false,
+		})
+			.then((res) => {
+				setLoginState(res);
+				console.log(res);
+			})
+			.catch((err) => {
+				alert(err.error);
+				console.error(err);
+			});
 	};
 
 	React.useEffect(() => {
-		if (loginState) router.push("HomeMain");
+		if (loginState) {
+			console.log("login state: " + loginState);
+		}
 	}, [loginState]);
 
 	// React.useEffect(() => {
@@ -110,6 +116,7 @@ function SignIn() {
 			redirect: false,
 		});
 	};
+	console.log("loging state Var", loginState);
 
 	return (
 		<>
@@ -119,6 +126,8 @@ function SignIn() {
 					style={backgroundImage}
 				>
 					<div className="col-10 col-lg-4 col-md-6 col-sm-8 p-3 border rounded bg-white shadow-lg">
+						{loginState && <Alert severity="error">{loginState.error}</Alert>}
+
 						<Formik
 							initialValues={initialValues}
 							onSubmit={handleSubmit}

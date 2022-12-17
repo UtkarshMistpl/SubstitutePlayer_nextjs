@@ -50,13 +50,13 @@ const HomeMain = () => {
 						</div>
 						<div className="col-12">
 							<div className="p-3">
-								<Button
+								{/* <Button
 									variant="contained"
 									color="secondary"
 									onClick={runOnClick}
 								>
 									Run
-								</Button>
+								</Button> */}
 							</div>
 						</div>
 					</div>

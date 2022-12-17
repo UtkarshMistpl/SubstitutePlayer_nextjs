@@ -12,6 +12,7 @@ import LayOut from "../components/Layout/layOut";
 import { useProtectPage } from "../hooks/useProtectPage";
 import { useSnackbar, SnackbarContent } from "notistack";
 import Multiselect from "multiselect-react-dropdown";
+import { Slider } from "@mui/material";
 const phoneRegExp =
 	/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 const backgroundImage = {
@@ -89,6 +90,11 @@ const PlayerForm = () => {
 		}
 
 		if (!error) {
+			if (result.error) {
+				enqueueSnackbar("email already exist", {
+					variant: "error",
+				});
+			}
 			enqueueSnackbar("Data submited successfully!", {
 				variant: "success",
 			});
@@ -202,6 +208,7 @@ const PlayerForm = () => {
 												className="form-control"
 												name="skill"
 												id="skill"
+												placeholder="Skill"
 												type="text"
 											/>
 										</Form.Group>
@@ -221,6 +228,20 @@ const PlayerForm = () => {
 												name="_to"
 												id="_to"
 												type="time"
+											/>
+										</Form.Group>
+										<Form.Group>
+											<Form.Label>Range </Form.Label>
+
+											<Slider
+												aria-label="Range"
+												defaultValue={30}
+												valueLabelDisplay="auto"
+												step={10}
+												marks
+												min={10}
+												max={110}
+												sx={{ mb: "1rem" }}
 											/>
 										</Form.Group>
 										<Button variant="primary" type="submit">

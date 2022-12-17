@@ -43,7 +43,8 @@ const SportCenterTable = ({ data }) => {
 				id: i + 1,
 				club: result.name,
 				address: result.address,
-				contact: result.contact,
+				sports: result.sports,
+				days: result.days ? result.days : "Always Open",
 			};
 		});
 		setRows(temp_rows);
@@ -54,8 +55,13 @@ const SportCenterTable = ({ data }) => {
 		{ field: "club", headerName: "Club", width: 130 },
 		{ field: "address", headerName: "Address", width: 130 },
 		{
-			field: "contact",
-			headerName: "Contact",
+			field: "sport",
+			headerName: "Sports",
+			width: 130,
+		},
+		{
+			field: "days",
+			headerName: "Open",
 			width: 130,
 		},
 		{

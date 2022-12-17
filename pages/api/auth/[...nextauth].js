@@ -49,16 +49,18 @@ export const authOptions = {
 
 				if (!isValid) {
 					client.close();
-					throw new Error("Could not log you in!");
+					throw new Error("Incorrect Password!");
 				}
 
+				console.log(user);
 				client.close();
-				return { email: user.email };
+				return { email: user.role };
 			},
 		}),
 	],
 	pages: {
 		signIn: "/signin",
+		error: "/signin",
 	},
 	secret: process.env.JWT_SECRET,
 };

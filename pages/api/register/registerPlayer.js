@@ -12,8 +12,10 @@ export default async function registerPlayer(req, res) {
 		// let bodyObject = JSON.parse(req.body);
 		console.log(req.body);
 		let newPost = await playerController.createPlayer(req.body);
-		if (newPost) return res.status(200).json({ message: "Success" });
-		else return res.status(422).json({ message: "Failed" });
+		if (newPost) {
+			if (!newPost.error) return res.status(200).json({ message: "Success" });
+			else return res.status(200).json({ message: "email already exist" });
+		} else return res.status(422).json({ message: "Failed" });
 		// return res.status(200).json({ message: "Success" });
 	} else if (req.method == "GET") {
 		const posts = await db.collection("players").find({}).toArray();

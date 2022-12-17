@@ -52,6 +52,8 @@ const createPlayer = async (bodyObject) => {
 	// add doc to db
 	try {
 		// const user_id = req.user._id;
+		const check = await Player.findOne({ email: bodyObject.email });
+		if (check) return { error: "already exist" };
 		const player = await Player.create(bodyObject);
 		console.log(player);
 		return player;

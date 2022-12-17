@@ -7,6 +7,7 @@ import {
 	useMediaQuery,
 	useTheme,
 	Box,
+	Button,
 } from "@mui/material";
 import Face6Icon from "@mui/icons-material/Face6";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
@@ -78,22 +79,26 @@ const MainNav = (props) => {
 								}}
 							>
 								{Pages.map((page, index) => {
-									if (index < 3 || session)
+									if (
+										index < 3 ||
+										(session ? (session.role == "admin" ? true : false) : false)
+									)
 										return <Tab key={index} label={page} />;
 								})}
 							</Tabs>
 						)}
 
-						<Typography
+						<Button
 							sx={{
 								marginLeft: "auto",
 								marginRight: "0.5rem",
 								cursor: "pointer",
+								color: "#ffffff",
 							}}
 							onClick={logoutNext}
 						>
 							Logout <LogoutRoundedIcon />
-						</Typography>
+						</Button>
 
 						<Face6Icon />
 					</Toolbar>
